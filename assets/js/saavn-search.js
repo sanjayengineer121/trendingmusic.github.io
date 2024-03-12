@@ -25,7 +25,7 @@ async function doSaavnSearch(query,NotScroll,page) {
     document.querySelector("#saavn-search-box").value = decodeURIComponent(query);
     if(!query) {return 0;}
 results_container.innerHTML = `<span class="loader">Searching</span>`;
-    query=query+"&limit=40";
+    query=query+"&limit=200";
     if(page) {
         ;page_index=page_index+1;query=query+"&page="+page_index;
     } else {query=query+"&page=1";page_index=1;}
@@ -120,7 +120,7 @@ function TextAbstract(text, length) {
 }
 if(window.location.hash) {
    doSaavnSearch(window.location.hash.substring(1));
-} else {doSaavnSearch('english',1);}
+} else {doSaavnSearch('lofi song',1);}
 
 addEventListener('hashchange', event => { });
 onhashchange = event => {doSaavnSearch(window.location.hash.substring(1))};
