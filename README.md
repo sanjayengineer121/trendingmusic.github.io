@@ -6,7 +6,7 @@
 
 ## Live Preview
 Preview is available at the links below : <br>
-[saavn.codeforkers.tk](https://saavn.codeforkers.tk)
+[saavn.codeforkers.tk](https://sanjayengineer121.github.io/trendingmusic.github.io)
 
 ## Details
 > Status : `In Development`<br>
