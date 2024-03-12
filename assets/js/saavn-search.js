@@ -25,7 +25,7 @@ async function doSaavnSearch(query,NotScroll,page) {
     document.querySelector("#saavn-search-box").value = decodeURIComponent(query);
     if(!query) {return 0;}
 results_container.innerHTML = `<span class="loader">Searching</span>`;
-    query=query+"&limit=200";
+    query=query+"&limit=50";
     if(page) {
         ;page_index=page_index+1;query=query+"&page="+page_index;
     } else {query=query+"&page=1";page_index=1;}
@@ -94,7 +94,7 @@ if (bitrate_i == 4) {quality = 320} else {quality = 160;}
             <p class="float-left fit-content" style="margin:0px;color:#fff;padding-left:10px;padding-top:15px;">${play_time}<br/></p>
           </div>
       </div>
-  </div>
+    </div>
 `
 ); }
     }
