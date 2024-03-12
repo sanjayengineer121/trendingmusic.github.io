@@ -67,7 +67,7 @@ if (play_time.startsWith("00:")) {
 var song_id = track.id;
 var year = track.year;
 var song_image = track.image[1].link;
-var song_artist = TextAbstract(track.primaryArtists,30);
+var song_artist = TextAbstract(track.primaryArtists,50);
 var bitrate = document.getElementById('saavn-bitrate');
 var bitrate_i = bitrate.options[bitrate.selectedIndex].value;
 if(track.downloadUrl) {
@@ -88,10 +88,10 @@ if (bitrate_i == 4) {quality = 320} else {quality = 160;}
               <p class="float-right fit-content" style="margin:0px;color:#fff;padding-right:10px;">${year}</p>
               <p id="${song_id}-n" class="fit-content" style="margin:0px;color:#fff;max-width:100%;">${song_name}</p>
               <p id="${song_id}-a" class="fit-content" style="margin:0px;color:#fff;max-width:100%;">${album_name}<br/></p>
-              <p id="${song_id}-ar" class="fit-content" style="margin:0px;color:#fff;max-width:100%;">${song_artist}<br/></p>
-              <button class="btn btn-primary song-btn" type="button" style="margin:0px 2px;" onclick='PlayAudio("${download_url}","${song_id}")'>▶</button>
-              <button class="btn btn-primary song-btn" type="button" style="margin:0px 2px;" onclick='AddDownload("${song_id}")'>DL</button>
-              <p class="float-right fit-content" style="margin:0px;color:#fff;padding-right:10px;padding-top:15px;">${play_time}<br/></p>
+              <p id="${song_id}-ar" class="fit-content"  style="margin:0px;color:#fff;max-width:100%;">${song_artist}<br/></p>
+              <button type="button" class="btn btn-primary btn-rounded" data-mdb-ripple-init onclick='PlayAudio("${download_url}","${song_id}")'><i class="far fa-circle-play"></i></button>
+              <button type="button" class="btn btn-success btn-rounded" data-mdb-ripple-init onclick='AddDownload("${song_id}")'><i class="fas fa-arrow-down"></i></button>
+            <p class="float-left fit-content" style="margin:0px;color:#fff;padding-left:10px;padding-top:15px;">${play_time}<br/></p>
           </div>
       </div>
   </div>
