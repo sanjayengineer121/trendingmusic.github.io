@@ -13,6 +13,7 @@ if(query.length > 0) {
 }
 
 }
+
 var page_index = 1;
 function nextPage() {
     var query = document.querySelector("#saavn-search-box").value.trim();
@@ -139,3 +140,20 @@ $('#saavn-bitrate').on('change', function () {
     } */
 });
 document.getElementById("loadmore").addEventListener('click',nextPage)
+
+// Function to play the next song
+function playNextSong() {
+    var keys = Object.keys(results_objects);
+    var currentIndex = keys.indexOf(currently_playing_id);
+    var nextIndex = currentIndex + 1;
+    if (nextIndex >= keys.length) {
+        nextIndex = 0; // Loop back to the beginning of the playlist
+    }
+    var nextSongId = keys[nextIndex];
+    var nextSong = results_objects[nextSongId];
+    var downloadUrl = nextSong.track.downloadUrl[bitrate_i]['link'];
+    PlayAudio(downloadUrl, nextSongId);
+}
+
+// Automatically play the next song when the current song ends
+document.getElementById("player").addEventListener("ended", playNextSong);

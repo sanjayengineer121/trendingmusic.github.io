@@ -1,30 +1,67 @@
-function PlayAudio(audio_url, song_id) {
-    
-  var audio = document.getElementById('player');
-  var source = document.getElementById('audioSource');
-  source.src = audio_url;
-  var name = document.getElementById(song_id+"-n").textContent;
-  var album = document.getElementById(song_id+"-a").textContent;
-  var image = document.getElementById(song_id+"-i").getAttribute("src");
-    
-document.title = name+" - "+album;
-var bitrate = document.getElementById('saavn-bitrate');
-var bitrate_i = bitrate.options[bitrate.selectedIndex].value;
-var quality = "";
-if (bitrate_i == 4) {quality = 320} else {quality = 160;}
+// Function to play the next song
+function playNextSong() {
+    var keys = Object.keys(results_objects);
+    var currentIndex = keys.indexOf(currently_playing_id);
+    var nextIndex = currentIndex + 1;
+    if (nextIndex >= keys.length) {
+        nextIndex = 0; // Loop back to the beginning of the playlist
+    }
+    var nextSongId = keys[nextIndex];
+    var nextSong = results_objects[nextSongId];
+    var bitrate = document.getElementById('saavn-bitrate');
+    var bitrate_i = bitrate.options[bitrate.selectedIndex].value; // Get bitrate_i
+    var downloadUrl = nextSong.track.downloadUrl[bitrate_i]['link'];
+    PlayAudio(downloadUrl, nextSongId, bitrate_i); // Pass bitrate_i to PlayAudio()
+}
 
+// Automatically play the next song when the current song ends
+document.getElementById("player").addEventListener("ended", playNextSong);
+
+
+var bitrate_i = 320;
+
+function PlayAudio(audio_url, song_id, bitrate_i)  {
+    var audio = document.getElementById('player');
+    var source = document.getElementById('audioSource');
+    source.src = audio_url;
+    var name = document.getElementById(song_id + "-n").textContent;
+    var album = document.getElementById(song_id + "-a").textContent;
+    var image = document.getElementById(song_id + "-i").getAttribute("src");
+
+    document.title = name + " - " + album;
+    var bitrate = document.getElementById('saavn-bitrate');
+    var bitrate_i = bitrate.options[bitrate.selectedIndex].value;
+    var quality = "";
+    if (bitrate_i == 4) {
+        quality = 320;
+    } else {
+        quality = 160;
+    }
 
     document.getElementById("player-name").innerHTML = name;
-        document.getElementById("player-album").innerHTML = album;
-document.getElementById("player-image").setAttribute("src",image);
+    document.getElementById("player-album").innerHTML = album;
+    document.getElementById("player-image").setAttribute("src", image);
 
-var promise = audio.load();
-if (promise) {
-    //Older browsers may not return a promise, according to the MDN website
-    promise.catch(function(error) { console.error(error); });
-}//call this to just preload the audio without playing
-  audio.play(); //call this to play the song right away
+    var promise = audio.load();
+    if (promise) {
+        promise.catch(function (error) {
+            console.error(error);
+        });
+    }
+
+    audio.play();
+
+    // Update currently_playing_id variable
+    currently_playing_id = song_id;
+
+    // Add event listener to detect when the current song ends
+    audio.addEventListener('ended', function() {
+        console.log("Current song ended, attempting to play next song...");
+        playNextSong(bitrate_i);
+    });
 };
+
+
 function searchSong(search_term) {
     
 document.getElementById('search-box').value=search_term;
@@ -122,7 +159,7 @@ function AddDownload(id) {
                         }
                         if (data.status == "Done") {
                             // download complete, add download button
-                            download_status_span.innerHTML = `<a href="${DOWNLOAD_API}${data.url}" target="_blank">Download MP3</a>`;
+                            download_status_span.innerHTML = `<a href="${DOWNLOAD_API}${data.url}"target="_blank">Download MP3</a>`;
                             // clear interval
                             clearInterval(interval);
                             return;
