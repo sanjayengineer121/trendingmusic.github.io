@@ -38,6 +38,7 @@ var response = await fetch(searchUrl + query);
 results_container.innerHTML = `<span class="error">Error: ${error} <br> Check if API is down </span>`;
 }
 var json = await response.json();
+
 /* If response code isn't 200, display error*/
 if (response.status !== 200) {
     results_container.innerHTML = `<span class="error">Error: ${json.message}</span>`;
@@ -45,6 +46,8 @@ if (response.status !== 200) {
     return 0;
 }
 var json = json.data.results;
+json.sort((a, b) => b.playCount - a.playCount);
+console.log("After sorting:", json);
 var results = [];
 if(!json) {results_container.innerHTML = "<p> No result found. Try other Library </p>";return;}
 lastSearch = decodeURI(window.location.hash.substring(1));

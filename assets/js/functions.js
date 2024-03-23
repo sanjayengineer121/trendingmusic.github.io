@@ -1,22 +1,19 @@
-// Function to play the next song
 function playNextSong() {
-    var keys = Object.keys(results_objects);
-    var currentIndex = keys.indexOf(currently_playing_id);
-    var nextIndex = currentIndex + 1;
+    const keys = Object.keys(results_objects);
+    const currentIndex = keys.indexOf(currently_playing_id);
+    let nextIndex = currentIndex + 1;
     if (nextIndex >= keys.length) {
         nextIndex = 0; // Loop back to the beginning of the playlist
     }
-    var nextSongId = keys[nextIndex];
-    var nextSong = results_objects[nextSongId];
-    var bitrate = document.getElementById('saavn-bitrate');
-    var bitrate_i = bitrate.options[bitrate.selectedIndex].value; // Get bitrate_i
-    var downloadUrl = nextSong.track.downloadUrl[bitrate_i]['link'];
-    PlayAudio(downloadUrl, nextSongId, bitrate_i); // Pass bitrate_i to PlayAudio()
+    const nextSongId = keys[nextIndex];
+    const nextSong = results_objects[nextSongId];
+    const bitrate_i = document.getElementById('saavn-bitrate').value;
+    const downloadUrl = nextSong.track.downloadUrl[bitrate_i]['link'];
+    PlayAudio(downloadUrl, nextSongId, bitrate_i);
 }
 
 // Automatically play the next song when the current song ends
 document.getElementById("player").addEventListener("ended", playNextSong);
-
 
 var bitrate_i = 320;
 
